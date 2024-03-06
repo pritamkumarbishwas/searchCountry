@@ -1,48 +1,36 @@
-.countryCard {
+.country-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 10px;
   padding: 0 80px; /* Adjusted padding */
 }
 
-.card {
+.countryCard {
   border: 1px solid #d78f8f;
   padding: 15px;
   text-align: center;
   border-radius: 5px;
-  height: 100%; /* Removed fixed height */
 }
 
-.card img {
+.countryCard img {
   width: 100%;
   object-fit: cover;
   object-position: center;
   transition: 0.5s ease;
-  height: 60%;
 }
 
-.center { /* Changed center to use flexbox */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-}
-
-.card h3 {
+.countryCard h2 {
   font-size: 16px;
 }
 
 .form-control {
-  width: 400px;
+  width: 30%;
   height: 40px;
   text-align: left;
   padding: 0px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.loading {
-  text-align: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 150px;
-}
+

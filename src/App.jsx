@@ -1,54 +1,52 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-
 function App() {
   const [countries, setCountries] = useState([]);
-  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
-        if (!response.ok) {
-          throw new Error('Failed to fetch countries');
-        }
-        const data = await response.json();
-        setCountries(data);
-        setFilteredCountries(data);
-      } catch (error) {
-        console.error('Fetch country error:', error);
-      }
-    };
     fetchCountries();
   }, []);
 
-  const handleSearch = (event) => {
-    const searchTerm = event.target.value.trim().toLowerCase();
-    const filtered = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(searchTerm)
-    );
-    setFilteredCountries(filtered);
+  const fetchCountries = async () => {
+    try {
+      const response = await fetch("https://restcountries.com/v3.1/all");
+      if (!response.ok) {
+        throw new Error('Failed to fetch countries');
+      }
+      const data = await response.json();
+      setCountries(data);
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+    }
   };
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredCountries = countries.filter(country =>
+    country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <>
-      <center>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search for countries"
-          onChange={handleSearch}
-        />
-      </center>
-      <div className="countryCard">
-        {filteredCountries.map((country) => (
-          <div className="card" key={country.name.common}>
+    <div>
+      <input
+        type="text"
+        placeholder="Search for a country..."
+        value={searchTerm}
+        className='form-control'
+        onChange={handleSearch}
+      />
+      <div className="country-list">
+        {filteredCountries.map(country => (
+          <div key={country.name.common} className="countryCard">
             <img src={country.flags.png} alt={country.name.common} />
-            <h3>{country.name.common}</h3>
+            <h2>{country.name.common}</h2>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
